@@ -74,7 +74,7 @@ t_MAIOR = r'\>'
 
 t_E = r'\&\&'
 t_OU = r'\|\|'
-t_NEGACAO = r'\!'
+t_NEGACAO = r'\<\>'
 
 t_ignore = ' \t\r\f\v'
 
