@@ -66,7 +66,7 @@ t_SUBTRACAO = r'-'
 t_MULTIPLICACAO = r'\*'
 t_DIVISAO = r'\/'
 t_IGUAL = r'\='
-t_DIFERENTE = r'\<\>'
+t_DIFERENTE = r'\!'
 t_MENOR_IGUAL = r'\<\='
 t_MAIOR_IGUAL = r'\>\='
 t_MENOR = r'\<'
@@ -107,6 +107,11 @@ def t_error(t):
 	print('Invalid Caracter was found:', t.value[0])
 	t.lexer.skip(1)
 
+def f_column(token):
+  input = token.lexdata
+  line_start = input.rfind('\n', 0, token.lexpos) + 1
+  return (token.lexpos - line_start) + 1
+
 lexer = lex.lex()
 
 def tokenizator(data):
@@ -117,8 +122,12 @@ def tokenizator(data):
   while True:
     generated_token = lexer.token()
     if not generated_token: break
-    print(generated_token)
 
-    tokens.append(generated_token)
+    tokens.append({
+      'token': generated_token.type,
+      'value': generated_token.value,
+      'line': generated_token.lineno,
+      'column': f_column(lexer)
+    })
 
   return tokens

@@ -5,7 +5,8 @@ inteiro fatorial(inteiro: n)
 	d := 5.6 
 	inteiro: fat
 	se n > 10 então
-		se n > 0 então {não calcula se n > 0}
+		se n > 0 então {não ca
+		lcula se n > 0}
 			fat := 1
 			repita
 				repita
