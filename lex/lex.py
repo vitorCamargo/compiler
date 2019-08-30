@@ -130,4 +130,6 @@ def tokenizator(data):
       'column': f_column(lexer)
     })
 
+    print(generated_token.type, generated_token.value, generated_token.lineno, f_column(lexer))
+
   return tokens
