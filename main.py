@@ -21,6 +21,5 @@ def main():
   print('§§§§§§§§§§§ Running Lexer Parser §§§§§§§§§§§\n\n')
 
   tokens = lex.tokenizator(test_file)
-  # print(tokens)
 
 main()

@@ -17,9 +17,14 @@ reserved = { # Reserved Words in T++
 }
 
 tokens = [
+  # Numbers (Type of)
+  'NUM_NOTACAO_CIENTIFICA',
+  'NUM_FLUTUANTE',
+  'NUM_INTEIRO',
+
   'ID',
   'ATRIBUICAO',
-  'COMENTARIO',
+  # 'COMENTARIO',
 
   # Language Symbols
   'DOIS_PONTOS',
@@ -44,11 +49,7 @@ tokens = [
   # Logical
   'E',
   'OU',
-  'NEGACAO',
-
-  # Numbers (Type of)
-  'NUM_FLUTUANTE',
-  'NUM_INTEIRO'
+  'NEGACAO'
 ] + list(reserved.values())
 
 # Regular Expressions
@@ -79,6 +80,21 @@ t_NEGACAO = r'\<\>'
 t_ignore = ' \t\r\f\v'
 
 # Other (More Specific) Regular Expressions
+def t_NUM_NOTACAO_CIENTIFICA(t):
+  r'(-|\+)?[\d+]+\.?[\d+]*(e|E)(-|\+)?[\d+]+'
+  t.value = float(t.value)
+  return t
+
+def t_NUM_FLUTUANTE(t):
+  r'(-|\+)?[\d+]+\.[\d+]*'
+  t.value = float(t.value)
+  return t
+
+def t_NUM_INTEIRO(t):
+  r'(-|\+)?\d+'
+  t.value = int(t.value)
+  return t
+
 def t_ID(t):
   r'[a-zA-Z_áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ][a-zA-Z_0-9áàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ]*'
   t.type = reserved.get(t.value, 'ID')
@@ -86,17 +102,7 @@ def t_ID(t):
 
 def t_COMENTARIO(t):
   r'(\{(.|\n)*?\})|(\{(.|\n)*?)$'
-  return t
-
-def t_NUM_FLUTUANTE(t):
-  r'(\d+(\.\d*)?[eE][-+]?\d+)|(\d+\.\d*)'
-  t.value = float(t.value)
-  return t
-
-def t_NUM_INTEIRO(t):
-  r'\d+'
-  t.value = int(t.value)
-  return t
+  pass
 
 def t_newline(t):
 	r'\n+'
@@ -124,12 +130,13 @@ def tokenizator(data):
     if not generated_token: break
 
     tokens.append({
+      'token_itself': generated_token,
       'token': generated_token.type,
       'value': generated_token.value,
       'line': generated_token.lineno,
       'column': f_column(lexer)
     })
 
-    print(generated_token.type, generated_token.value, generated_token.lineno, f_column(lexer))
+    print(generated_token.type)
 
   return tokens
