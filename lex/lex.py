@@ -24,7 +24,6 @@ tokens = [
 
   'ID',
   'ATRIBUICAO',
-  # 'COMENTARIO',
 
   # Language Symbols
   'DOIS_PONTOS',
@@ -52,32 +51,88 @@ tokens = [
   'NEGACAO'
 ] + list(reserved.values())
 
+t_ANY_ignore = ' \t\r\f\v'
+
 # Regular Expressions
-t_ATRIBUICAO = r'\:\='
+def t_ATRIBUICAO(t):
+  r':='
+  return t
 
-t_DOIS_PONTOS = r'\:'
-t_VIRGULA = r'\,'
-t_ABRE_PARENTESES = r'\('
-t_FECHA_PARENTESES = r'\)'
-t_ABRE_CONCHETES = r'\['
-t_FECHA_CONCHETES = r'\]'
+def t_DOIS_PONTOS(t):
+  r':'
+  return t
 
-t_ADICAO = r'\+'
-t_SUBTRACAO = r'-'
-t_MULTIPLICACAO = r'\*'
-t_DIVISAO = r'\/'
-t_IGUAL = r'\='
-t_DIFERENTE = r'\!'
-t_MENOR_IGUAL = r'\<\='
-t_MAIOR_IGUAL = r'\>\='
-t_MENOR = r'\<'
-t_MAIOR = r'\>'
+def t_VIRGULA(t):
+  r','
+  return t
 
-t_E = r'\&\&'
-t_OU = r'\|\|'
-t_NEGACAO = r'\<\>'
+def t_ABRE_PARENTESES(t):
+  r'\('
+  return t
+  
+def t_FECHA_PARENTESES(t):
+  r'\)'
+  return t
 
-t_ignore = ' \t\r\f\v'
+def t_ABRE_CONCHETES(t):
+  r'\['
+  return t
+
+def t_FECHA_CONCHETES(t):
+  r'\]'
+  return t
+
+def t_ADICAO(t):
+  r'\+'
+  return t
+
+def t_SUBTRACAO(t):
+  r'\-'
+  return t
+
+def t_MULTIPLICACAO(t):
+  r'\*'
+  return t
+
+def t_DIVISAO(t):
+  r'\/'
+  return t
+
+def t_IGUAL(t):
+  r'\='
+  return t
+
+def t_DIFERENTE(t):
+  r'\!'
+  return t
+
+def t_MENOR_IGUAL(t):
+  r'<='
+  return t
+
+def t_MAIOR_IGUAL(t):
+  r'>='
+  return t
+
+def t_MENOR(t):
+  r'<'
+  return t
+
+def t_MAIOR(t):
+  r'>'
+  return t
+
+def t_E(t):
+  r'\&\&'
+  return t
+
+def t_OU(t):
+  r'\|\|'
+  return t
+
+def t_NEGACAO(t):
+  r'\<\>'
+  return t
 
 # Other (More Specific) Regular Expressions
 def t_NUM_NOTACAO_CIENTIFICA(t):
@@ -100,23 +155,24 @@ def t_ID(t):
   t.type = reserved.get(t.value, 'ID')
   return t
 
-def t_COMENTARIO(t):
+
+def t_comment(t):
   r'(\{(.|\n)*?\})|(\{(.|\n)*?)$'
+  t.lexer.lineno += len(t.value.split('\n')) - 1
   pass
 
-def t_newline(t):
-	r'\n+'
-	t.lexer.lineno += len(t.value)
-	pass
-
-def t_error(t):
-	print('Invalid Caracter was found:', t.value[0])
+def t_ANY_error(t):
+	print('Invalid Caracter \'' + t.value[0] + '\' at ' + str(t.lineno) + ':' + str(f_column(t)))
 	t.lexer.skip(1)
 
 def f_column(token):
-  input = token.lexdata
+  input = token.lexer.lexdata
   line_start = input.rfind('\n', 0, token.lexpos) + 1
   return (token.lexpos - line_start) + 1
+
+def t_ANY_newline(t):
+  r'\n+'
+  t.lexer.lineno += len(t.value)
 
 lexer = lex.lex()
 
@@ -134,9 +190,9 @@ def tokenizator(data):
       'token': generated_token.type,
       'value': generated_token.value,
       'line': generated_token.lineno,
-      'column': f_column(lexer)
+      'column': f_column(generated_token)
     })
 
-    print(generated_token.type)
+    print(generated_token.type, generated_token.value, generated_token.lineno, f_column(generated_token))
 
   return tokens
