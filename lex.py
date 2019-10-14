@@ -2,7 +2,7 @@
 import ply.lex as lex
 
 reserved = { # Reserved Words in T++
-  'principal': 'PRINCIPAL',
+  # 'principal': 'PRINCIPAL',
   'retorna': 'RETORNA',
   'leia': 'LEIA',
   'escreva': 'ESCREVA',

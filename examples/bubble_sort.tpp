@@ -1,4 +1,4 @@
-inteiro:vet[10]
+inteiro: vet[10]
 inteiro: tam
 
 tam := 10

@@ -2,7 +2,8 @@
 import sys
 import os
 
-import lex.lex as lex
+import lex
+import syn
 
 def main():
   if(len(sys.argv) != 2):
@@ -17,9 +18,11 @@ def main():
     return -2
 
   test_file = open(sys.argv[1], 'r', encoding = 'utf-8').read()
+  filename = os.path.splitext(os.path.basename(sys.argv[1]))[0]
   print('\n\nT++ Compiler developed by Vitor Bueno (RA: 1921959) for \'Compilers\' Subject at the Federal Technological University of Paraná (UTFPR) - Câmpus Campo Mourão')
   print('§§§§§§§§§§§ Running Lexer Parser §§§§§§§§§§§\n\n')
 
-  tokens = lex.tokenizator(test_file)
+  # tokens = lex.tokenizator(test_file)
+  # syn.parser(test_file, filename)
 
 main()
