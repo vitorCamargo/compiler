@@ -513,7 +513,7 @@ def p_error(p):
 
 yacc.yacc()
 
-def parser(data, filename):
+def parser(data):
     tree = yacc.parse(data)
 
     return tree, success

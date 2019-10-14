@@ -36,10 +36,11 @@ def main():
 
   print('\n\n§§§§§§§§§§§ Running Syntatic Parser §§§§§§§§§§§\n\n')
 
-  tree, success = syn.parser(test_file, filename)
+  tree, success = syn.parser(test_file)
   if(not success):
     return
   
   DotExporter(tree).to_dotfile("output/" + filename + ".dot")
+  print("Árvore .dot gerada em ./output/" + filename + ".dot")
 
 main()
