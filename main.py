@@ -23,6 +23,6 @@ def main():
   print('§§§§§§§§§§§ Running Lexer Parser §§§§§§§§§§§\n\n')
 
   # tokens = lex.tokenizator(test_file)
-  # syn.parser(test_file, filename)
+  syn.parser(test_file, filename)
 
 main()
