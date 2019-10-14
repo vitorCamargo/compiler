@@ -2,8 +2,14 @@
 import sys
 import os
 
+from anytree.exporter import DotExporter
+
 import lex
 import syn
+
+def print_tokens(tokens):
+  for token in tokens:
+    print("<" + token["token"] + "> --> \"" + str(token["value"]) + "\" at " + str(token["line"]) + ":" + str(token["column"]))
 
 def main():
   if(len(sys.argv) != 2):
@@ -20,9 +26,20 @@ def main():
   test_file = open(sys.argv[1], 'r', encoding = 'utf-8').read()
   filename = os.path.splitext(os.path.basename(sys.argv[1]))[0]
   print('\n\nT++ Compiler developed by Vitor Bueno (RA: 1921959) for \'Compilers\' Subject at the Federal Technological University of Paraná (UTFPR) - Câmpus Campo Mourão')
-  print('§§§§§§§§§§§ Running Lexer Parser §§§§§§§§§§§\n\n')
+  print('§§§§§§§§§§§ Running Lexer §§§§§§§§§§§\n\n')
 
-  # tokens = lex.tokenizator(test_file)
-  syn.parser(test_file, filename)
+  tokens, success = lex.tokenizator(test_file)
+  if(not success):
+    return
+
+  print_tokens(tokens)
+
+  print('\n\n§§§§§§§§§§§ Running Syntatic Parser §§§§§§§§§§§\n\n')
+
+  tree, success = syn.parser(test_file, filename)
+  if(not success):
+    return
+  
+  DotExporter(tree).to_dotfile("output/" + filename + ".dot")
 
 main()

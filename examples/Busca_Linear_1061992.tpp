@@ -9,10 +9,10 @@ inteiro busca(inteiro: n)
 	retorno := 0
 	i := 0
 
-	repita 
-		se A[i] = n
+	repita
+		se A[i] = n então
 			retorno := 1
-		fim		
+		fim
 		i := i + 1
 	até i = 20
 
@@ -32,5 +32,5 @@ inteiro principal()
 
 	leia(n)
 	escreva(busca(n))
-	retorno(0)
+	retorna(0)
 fim

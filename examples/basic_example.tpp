@@ -2,9 +2,9 @@ inteiro principal() { função principal }
 	inteiro: digitado
 	inteiro: i
   i := 1
-  digitado := leia()
+  leia(digitado)
   repita
-		escreva (i)
+		escreva(i)
 		i := i+1
 	até i <= digitado
 fim

@@ -19,3 +19,4 @@ inteiro principal ()
 	até i = 100
 
 	multivet(100)
+fim

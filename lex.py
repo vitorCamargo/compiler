@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import ply.lex as lex
 
+success = True
+
 reserved = { # Reserved Words in T++
   # 'principal': 'PRINCIPAL',
   'retorna': 'RETORNA',
@@ -155,13 +157,15 @@ def t_ID(t):
   t.type = reserved.get(t.value, 'ID')
   return t
 
-
 def t_comment(t):
   r'(\{(.|\n)*?\})|(\{(.|\n)*?)$'
   t.lexer.lineno += len(t.value.split('\n')) - 1
   pass
 
 def t_ANY_error(t):
+	global success
+	success = False
+
 	print('Invalid Caracter \'' + t.value[0] + '\' at ' + str(t.lineno) + ':' + str(f_column(t)))
 	t.lexer.skip(1)
 
@@ -193,6 +197,4 @@ def tokenizator(data):
       'column': f_column(generated_token)
     })
 
-    print(generated_token.type, generated_token.value, generated_token.lineno, f_column(generated_token))
-
-  return tokens
+  return tokens, success

@@ -3,7 +3,7 @@ inteiro principal()
 	inteiro: i
 
 	i := 1
-	digitado := leia()
+	leia(digitado)
 	repita
 		escreva (i)
 		i := i+1

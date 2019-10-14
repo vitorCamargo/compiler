@@ -4,12 +4,12 @@ import ply.yacc as yacc
 
 import lex as lex
 
-from anytree import Node, RenderTree
-from anytree.exporter import DotExporter
+from anytree import Node
 
 tokens =  lex.tokens
 
 num_id = 0
+success = True
 
 def p_programa(p):
     '''
@@ -177,13 +177,13 @@ def p_parametro(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Tipo " + str(p[2]) + " " + str(p[3]), children = [1])
+    p[0] = Node(str(num_id) + ". Tipo " + str(p[2]) + " " + str(p[3]), children = [p[1]])
 
     num_id += 1
 
 def p_corpo(p):
     '''
-        corpo : corpo acao 
+        corpo : corpo acao
             | vazio
     '''
 
@@ -205,7 +205,6 @@ def p_acao(p):
             | leia
             | escreva
             | retorna
-            | error
     '''
 
     global num_id
@@ -504,14 +503,17 @@ def p_vazio(p):
     num_id += 1
 
 def p_error(p):
+    global success
+    success = False
+
     if p:
-        print("Syntax error at token", p.type)
-        # Just discard the token and tell the parser it's okay.
+        print('Invalid syntax at token \'' + str(p.value) + '\' at ' + str(p.lineno) + ':' + str(lex.f_column(p)))
     else:
         print("Syntax error at EOF")
 
 yacc.yacc()
 
-def parser(data, name):
-    result = yacc.parse(data)
-    DotExporter(result).to_dotfile("output/" + name + ".dot")
+def parser(data, filename):
+    tree = yacc.parse(data)
+
+    return tree, success
