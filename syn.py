@@ -507,13 +507,174 @@ def p_error(p):
     success = False
 
     if p:
-        print('Invalid syntax at token \'' + str(p.value) + '\' at ' + str(p.lineno) + ':' + str(lex.f_column(p)))
+        print('Invalid syntax at token \'' + str(p.value) + '\' at ' + str(int((p.lineno - 1)/2)) + ':' + str(lex.f_column(p)))
     else:
         print("Syntax error at EOF")
+
+def p_leia_error(p):
+    '''
+        leia : LEIA ABRE_PARENTESES error FECHA_PARENTESES
+    '''
+
+    print("Invalid Argument in Function 'LEIA'")
+    exit(1)
+
+def p_escreva_error(p):
+    '''
+        escreva : ESCREVA ABRE_PARENTESES error FECHA_PARENTESES
+    '''
+
+    print("Invalid Argument in Function 'LEIA'")
+    exit(1)
+
+def p_retorna_error(p):
+    '''
+        retorna : RETORNA ABRE_PARENTESES error FECHA_PARENTESES
+    '''
+
+    print("Invalid Argument in Function 'RETORNA'")
+    exit(1)
+
+def p_declaracao_variaveis_error(p):
+    '''
+        declaracao_variaveis : error DOIS_PONTOS lista_variaveis
+    '''
+
+    print("Variable Declaration Error")
+    exit(1)
+    
+def p_atribuicao_error(p):
+    '''
+        atribuicao : var ATRIBUICAO error
+                | error ATRIBUICAO expressao
+    '''
+
+    print("Atribution Error")
+    exit(1)
+
+def p_lista_declaracoes_error(p):
+    '''
+        lista_declaracoes : error error
+                        | error
+    '''
+
+    print("Declaration List Error")
+    exit(1)
+
+def p_indice_error(p):
+    '''
+        indice : indice ABRE_CONCHETES error FECHA_CONCHETES
+            | ABRE_CONCHETES error FECHA_CONCHETES
+    '''
+
+    print("Index Error")
+    exit(1)
+
+def p_acao_error(p):
+    '''
+        acao : error
+    '''
+
+    print("Action Error")
+    exit(1)
+
+def p_cabecalho_error(p):
+    '''
+        cabecalho : ID ABRE_PARENTESES lista_parametros FECHA_PARENTESES error FIM
+    '''
+
+    print("Function Header Error")
+    exit(1)
+
+def p_repita_error(p):
+    '''
+        repita : REPITA error ATE error
+    '''
+
+    print("'REPITA' Looping Error")
+    exit(1)
+
+def p_declaracao_error(p):
+    '''
+        declaracao : error
+    '''
+
+    print("Declaration Error")
+    exit(1)
+
+def p_inicializacao_variaveis_error(p):
+    '''
+        inicializacao_variaveis : error
+    '''
+
+    print("Variable Initialization Error")
+    exit(1)
+
+def p_lista_variaveis_error(p):
+    '''
+        lista_variaveis : error VIRGULA error
+                        | error
+    '''
+
+    print("Variable List Error")
+    exit(1)
+
+def p_declaracao_funcao_error(p):
+    '''
+        declaracao_funcao : error error
+                        | error
+    '''
+
+    print("Function Declaration Error")
+    exit(1)
+
+def p_lista_parametros_error(p):
+    '''
+        lista_parametros : error VIRGULA error
+                        | error
+    '''
+
+    print("Parameters List Error")
+    exit(1)
+
+def p_corpo_error(p):
+    '''
+        corpo : error error
+            | error
+    '''
+
+    print("Body Function Error")
+    exit(1)
+
+def p_se_error(p):
+    '''
+        se : SE error ENTAO error FIM
+            | SE error ENTAO error SENAO error FIM
+    '''
+
+    print("Conditional Error")
+    exit(1)
+
+def p_expressao_error(p):
+    '''
+        expressao : error
+    '''
+
+    print("Expression Error")
+    exit(1)
+
+def p_expressao_simples_error(p):
+    '''
+        expressao_simples : error
+                        | error error error
+    '''
+
+    print("Expression Error")
+    exit(1)
 
 yacc.yacc()
 
 def parser(data):
-    tree = yacc.parse(data)
+    tree = yacc.parse(data, tracking = True)
 
     return tree, success

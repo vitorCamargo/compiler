@@ -40,7 +40,7 @@ def main():
   if(not success):
     return
   
-  DotExporter(tree).to_dotfile("output/" + filename + ".dot")
-  print("Árvore .dot gerada em ./output/" + filename + ".dot")
+  DotExporter(tree).to_picture("output/" + filename + ".png")
+  print("Generated .dot tree at: \'./output/" + filename + ".png\'")
 
 main()

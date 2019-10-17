@@ -1,10 +1,14 @@
-inteiro principal() { função principal }
+inteiro principal()
 	inteiro: digitado
 	inteiro: i
+
   i := 1
-  leia(digitado)
+	po := leia(digitado)
+
   repita
 		escreva(i)
 		i := i+1
 	até i <= digitado
 fim
+
+

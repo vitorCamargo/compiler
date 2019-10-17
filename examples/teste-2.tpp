@@ -1,12 +1,10 @@
 inteiro: n, g
-
 inteiro fatorial(inteiro: n)
 	flutuante: d
 	d := 5.6 
 	inteiro: fat
 	se n > 10 então
-		se n > 0 então {não ca
-		lcula se n > 0}
+		se n > 0 então
 			fat := 1
 			repita
 				repita
@@ -27,6 +25,6 @@ inteiro fatorial(inteiro: n)
 fim
 
 inteiro principal()
-	leia(n)
+	oi := leia(n)
 	escreva(fatorial(fatorial(1)))
 fim
