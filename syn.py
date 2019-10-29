@@ -112,8 +112,8 @@ def p_var(p):
 
 def p_indice(p):
     '''
-        indice : indice ABRE_CONCHETES expressao FECHA_CONCHETES
-                | ABRE_CONCHETES expressao FECHA_CONCHETES
+        indice : indice ABRE_COLCHETES expressao FECHA_COLCHETES
+                | ABRE_COLCHETES expressao FECHA_COLCHETES
     '''
 
     global num_id
@@ -192,7 +192,7 @@ def p_lista_parametros(p):
 def p_parametro(p):
     '''
         parametro : tipo DOIS_PONTOS ID
-                |  parametro ABRE_CONCHETES FECHA_CONCHETES
+                |  parametro ABRE_COLCHETES FECHA_COLCHETES
     '''
 
     global num_id
@@ -549,7 +549,6 @@ def p_vazio(p):
 def p_error(p):
     global success
     success = False
-    print('99999', p)
 
     if p:
         print('Invalid syntax at token \'' + str(p.value) + '\' at ' + str(int((p.lineno - 1)/2)) + ':' + str(lex.f_column(p)))
@@ -608,8 +607,8 @@ def p_lista_declaracoes_error(p):
 
 def p_indice_error(p):
     '''
-        indice : indice ABRE_CONCHETES error FECHA_CONCHETES
-            | ABRE_CONCHETES error FECHA_CONCHETES
+        indice : indice ABRE_COLCHETES error FECHA_COLCHETES
+            | ABRE_COLCHETES error FECHA_COLCHETES
     '''
 
     print("Index Error")

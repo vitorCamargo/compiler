@@ -32,8 +32,8 @@ tokens = [
   'VIRGULA',
   'ABRE_PARENTESES',
   'FECHA_PARENTESES',
-  'ABRE_CONCHETES',
-  'FECHA_CONCHETES',
+  'ABRE_COLCHETES',
+  'FECHA_COLCHETES',
 
   # Operators
   'ADICAO',
@@ -76,11 +76,11 @@ def t_FECHA_PARENTESES(t):
   r'\)'
   return t
 
-def t_ABRE_CONCHETES(t):
+def t_ABRE_COLCHETES(t):
   r'\['
   return t
 
-def t_FECHA_CONCHETES(t):
+def t_FECHA_COLCHETES(t):
   r'\]'
   return t
 
