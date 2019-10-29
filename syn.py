@@ -6,7 +6,7 @@ import lex as lex
 
 from anytree import Node
 
-tokens =  lex.tokens
+tokens = lex.tokens
 
 num_id = 0
 success = True
@@ -18,7 +18,8 @@ def p_programa(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Program", children = [p[1]])
+    p[0] = Node(str(num_id) + ". programa", children = [p[1]])
+
     num_id += 1
 
 def p_lista_declaracoes(p):
@@ -30,9 +31,9 @@ def p_lista_declaracoes(p):
     global num_id
 
     if(len(p) == 3):
-        p[0] = Node(str(num_id) + ". Lista Declarações", children = [p[1], p[2]])
+        p[0] = Node(str(num_id) + ". lista_declaracoes", children = [p[1], p[2]])
     else:
-        p[0] = Node(str(num_id) + ". Lista Declarações", children = [p[1]])
+        p[0] = Node(str(num_id) + ". lista_declaracoes", children = [p[1]])
 
     num_id += 1
 
@@ -45,7 +46,7 @@ def p_declaracao(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Declaração", children = [p[1]])
+    p[0] = Node(str(num_id) + ". declaracao", children = [p[1]])
 
     num_id += 1
 
@@ -56,7 +57,9 @@ def p_declaracao_variaveis(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". " + str(p[2]), children = [p[1], p[3]])
+    p[0] = Node(str(num_id) + ". declaracao_variaveis", children = [
+        p[1], Node(str(num_id) + ". " +  str(p[2])), p[3]
+    ])
 
     num_id += 1
 
@@ -67,7 +70,7 @@ def p_inicializacao_variaveis(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Inicialização Variáveis", children = [p[1]])
+    p[0] = Node(str(num_id) + ". inicializacao_variaveis", children = [p[1]])
 
     num_id += 1
 
@@ -80,9 +83,12 @@ def p_lista_variaveis(p):
     global num_id
 
     if(len(p) == 4):
-        p[0] = Node(str(num_id) + ". Lista Variáveis", children = [p[1], p[3]])
+        p[0] = Node(str(num_id) + ". lista_variaveis", children = [
+            p[1], Node(str(num_id) + ". " +  str(p[2])), p[3]
+        ])
     else:
-        p[0] = Node(str(num_id) + ". Variável", children = [p[1]])
+        p[0] = Node(str(num_id) + ". lista_variaveis", children = [p[1]])
+
     num_id += 1
 
 def p_var(p):
@@ -94,9 +100,13 @@ def p_var(p):
     global num_id
 
     if(len(p) == 3):
-        p[0] = Node(str(num_id) + ". Índice ID", children = [p[2]])
+        p[0] = Node(str(num_id) + ". var", children = [
+            Node(str(num_id) + ". " +  str(p[1])), p[2]
+        ])
     else:
-        p[0] = Node(str(num_id) + ". " + p[1])
+        p[0] = Node(str(num_id) + ". var", children = [
+            Node(str(num_id) + ". " +  str(p[1]))
+        ])
 
     num_id += 1
 
@@ -109,9 +119,13 @@ def p_indice(p):
     global num_id
 
     if(len(p) == 5):
-        p[0] = Node(str(num_id) + ". Índice " + str(p[2]) + " Expressão " + str(p[4]), children = [p[1], p[3]])
+        p[0] = Node(str(num_id) + ". indice", children = [
+            p[1], Node(str(num_id) + ". " +  str(p[2])), p[3], Node(str(num_id) + ". " +  str(p[4]))
+        ])
     else:
-        p[0] = Node(str(num_id) + ". " + str(p[1]) + " Expressão " + str(p[3]), children = [p[2]])
+        p[0] = Node(str(num_id) + ". indice", children = [
+            Node(str(num_id) + ". " +  str(p[1])), p[2], Node(str(num_id) + ". " +  str(p[3]))
+        ])
 
     num_id += 1
 
@@ -123,7 +137,9 @@ def p_tipo(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". " + p[1])
+    p[0] = Node(str(num_id) + ". tipo", children = [
+        Node(str(num_id) + ". " +  str(p[1]))
+    ])
 
     num_id += 1
 
@@ -136,9 +152,9 @@ def p_declaracao_funcao(p):
     global num_id
 
     if(len(p) == 3):
-        p[0] = Node(str(num_id) + ". Declaracão Função", children = [p[1], p[2]])
+        p[0] = Node(str(num_id) + ". declaracao_funcao", children = [p[1], p[2]])
     else:
-        p[0] = Node(str(num_id) + ". Declaracão Função", children = [p[1]])
+        p[0] = Node(str(num_id) + ". declaracao_funcao", children = [p[1]])
 
     num_id += 1
 
@@ -149,7 +165,9 @@ def p_cabecalho(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Cabeçalho", children = [p[3], p[5]])
+    p[0] = Node(str(num_id) + ". cabecalho", children = [
+        Node(str(num_id) + ". " +  str(p[1])), Node(str(num_id) + ". " +  str(p[2])), p[3], Node(str(num_id) + ". " +  str(p[4])), p[5]
+    ])
 
     num_id += 1
 
@@ -163,9 +181,11 @@ def p_lista_parametros(p):
     global num_id
 
     if(len(p) == 4):
-        p[0] = Node(str(num_id) + ". Lista Parâmetros " + p[2] + " Parâmetro", children = [p[1], p[3]])
+        p[0] = Node(str(num_id) + ". lista_parametros", children = [
+            p[1], Node(str(num_id) + ". " +  str(p[2])), p[3]
+        ])
     else:
-        p[0] = Node(str(num_id) + ". Lista Parâmetros", children = [p[1]])
+        p[0] = Node(str(num_id) + ". lista_parametros", children = [p[1]])
 
     num_id += 1
 
@@ -177,7 +197,9 @@ def p_parametro(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Tipo " + str(p[2]) + " " + str(p[3]), children = [p[1]])
+    p[0] = Node(str(num_id) + ". parametro", children = [
+        p[1], Node(str(num_id) + ". " +  str(p[2])), Node(str(num_id) + ". " +  str(p[3]))
+    ])
 
     num_id += 1
 
@@ -190,9 +212,9 @@ def p_corpo(p):
     global num_id
 
     if(len(p) == 3):
-        p[0] = Node(str(num_id) + ". Corpo", children = [p[1], p[2]])
+        p[0] = Node(str(num_id) + ". corpo", children = [p[1], p[2]])
     else: 
-        p[0] = Node(str(num_id) + ". Vazio", children = [p[1]])
+        p[0] = Node(str(num_id) + ". corpo", children = [p[1]])
 
     num_id += 1
 
@@ -209,7 +231,7 @@ def p_acao(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Ação", children = [p[1]])
+    p[0] = Node(str(num_id) + ". acao", children = [p[1]])
 
     num_id += 1
 
@@ -222,9 +244,13 @@ def p_se(p):
     global num_id
 
     if(len(p) == 6):
-        p[0] = Node(str(num_id) + ". Se", children = [p[2], p[4]])
+        p[0] = Node(str(num_id) + ". se", children = [
+            Node(str(num_id) + ". " +  str(p[1])), p[2], Node(str(num_id) + ". " +  str(p[3])), p[4], Node(str(num_id) + ". " +  str(p[5]))
+        ])
     else:
-        p[0] = Node(str(num_id) + ". Se", children = [p[2], p[4], p[6]])
+        p[0] = Node(str(num_id) + ". se", children = [
+            Node(str(num_id) + ". " +  str(p[1])), p[2], Node(str(num_id) + ". " +  str(p[3])), p[4], Node(str(num_id) + ". " +  str(p[5])), p[6]
+        ])
 
     num_id += 1
 
@@ -235,7 +261,9 @@ def p_repita(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Repita", children = [p[2], p[4]])
+    p[0] = Node(str(num_id) + ". repita", children = [
+        Node(str(num_id) + ". " +  str(p[1])), p[2], Node(str(num_id) + ". " +  str(p[3])), p[4]
+    ])
 
     num_id += 1
 
@@ -246,7 +274,9 @@ def p_atribuicao(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". :=", children = [p[1], p[3]])
+    p[0] = Node(str(num_id) + ". atribuicao", children = [
+        p[1], Node(str(num_id) + ". " +  str(p[2])), p[3]
+    ])
 
     num_id += 1
 
@@ -257,7 +287,9 @@ def p_leia(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Leia", children = [p[3]])
+    p[0] = Node(str(num_id) + ". leia", children = [
+        Node(str(num_id) + ". " +  str(p[1])), Node(str(num_id) + ". " +  str(p[2])), p[3], Node(str(num_id) + ". " +  str(p[4]))
+    ])
 
     num_id += 1
 
@@ -268,7 +300,9 @@ def p_escreva(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + " escreva", children = [p[3]])
+    p[0] = Node(str(num_id) + ". escreva", children = [
+        Node(str(num_id) + ". " +  str(p[1])), Node(str(num_id) + ". " +  str(p[2])), p[3], Node(str(num_id) + ". " +  str(p[4]))
+    ])
 
     num_id += 1
 
@@ -279,7 +313,9 @@ def p_retorna(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Retorna", children = [p[3]])
+    p[0] = Node(str(num_id) + ". retorna", children = [
+        Node(str(num_id) + ". " +  str(p[1])), Node(str(num_id) + ". " +  str(p[2])), p[3], Node(str(num_id) + ". " +  str(p[4]))
+    ])
 
     num_id += 1
 
@@ -291,7 +327,7 @@ def p_expressao(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Expressão", children = [p[1]])
+    p[0] = Node(str(num_id) + ". expressao", children = [p[1]])
 
     num_id += 1
 
@@ -304,9 +340,9 @@ def p_expressao_logica(p):
     global num_id
 
     if(len(p) == 4):
-        p[0] = Node(str(num_id) + ". Expressão Lógica", children = [p[1], p[2], p[3]])
+        p[0] = Node(str(num_id) + ". expressao_logica", children = [p[1], p[2], p[3]])
     else:
-        p[0] = Node(str(num_id) + ". Expressão Lógica", children = [p[1]])
+        p[0] = Node(str(num_id) + ". expressao_logica", children = [p[1]])
 
     num_id += 1
 
@@ -319,9 +355,9 @@ def p_expressao_simples(p):
     global num_id
 
     if(len(p) == 4):
-        p[0] = Node(str(num_id) + ". Expressão Simples", children = [p[1], p[2], p[3]])
+        p[0] = Node(str(num_id) + ". expressao_simples", children = [p[1], p[2], p[3]])
     else:
-        p[0] = Node(str(num_id) + ". Expressão Simples", children = [p[1]])
+        p[0] = Node(str(num_id) + ". expressao_simples", children = [p[1]])
 
     num_id += 1
 
@@ -334,9 +370,9 @@ def p_expressao_aditiva(p):
     global num_id
 
     if(len(p) == 4):
-        p[0] = Node(str(num_id) + ". Expressão Aditiva", children = [p[1], p[2], p[3]])
+        p[0] = Node(str(num_id) + ". expressao_adtiva", children = [p[1], p[2], p[3]])
     else:
-        p[0] = Node(str(num_id) + ". Expressão Aditiva", children = [p[1]])
+        p[0] = Node(str(num_id) + ". expressao_adtiva", children = [p[1]])
 
     num_id += 1
 
@@ -349,9 +385,9 @@ def p_expressao_multiplicativa(p):
     global num_id
 
     if(len(p) == 4):
-        p[0] = Node(str(num_id) + ". Expressão Multiplicativa", children = [p[1], p[2], p[3]])
+        p[0] = Node(str(num_id) + ". expressao_multiplicativa", children = [p[1], p[2], p[3]])
     else:
-        p[0] = Node(str(num_id) + ". Expressão Multiplicativa", children = [p[1]])
+        p[0] = Node(str(num_id) + ". expressao_multiplicativa", children = [p[1]])
 
     num_id += 1
 
@@ -365,9 +401,9 @@ def p_expressao_unaria(p):
     global num_id
 
     if(len(p) == 3):
-        p[0] = Node(str(num_id) + ". Expressão Unária", children = [p[1], p[2]])
+        p[0] = Node(str(num_id) + ". expressao_unaria", children = [p[1], p[2]])
     else:
-        p[0] = Node(str(num_id) + ". Expressão Unária", children = [p[1]])
+        p[0] = Node(str(num_id) + ". expressao_unaria", children = [p[1]])
 
     num_id += 1
 
@@ -383,7 +419,7 @@ def p_operador_relacional(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". " + str(p[1]))
+    p[0] = Node(str(num_id) + ". operador_relacional", children = [Node(str(num_id) + ". " +  str(p[1]))])
 
     num_id += 1
 
@@ -395,7 +431,7 @@ def p_operador_soma(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". " + str(p[1]))
+    p[0] = Node(str(num_id) + ". operador_soma", children = [Node(str(num_id) + ". " +  str(p[1]))])
 
     num_id += 1
 
@@ -407,7 +443,7 @@ def p_operador_logico(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". " + str(p[1]))
+    p[0] = Node(str(num_id) + ". operador_logico", children = [Node(str(num_id) + ". " +  str(p[1]))])
 
     num_id += 1
 
@@ -418,7 +454,7 @@ def p_operador_negacao(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". " + str(p[1]))
+    p[0] = Node(str(num_id) + ". operador_negacao", children = [Node(str(num_id) + ". " +  str(p[1]))])
 
     num_id += 1
 
@@ -430,7 +466,7 @@ def p_operador_multiplicacao(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". " + str(p[1]))
+    p[0] = Node(str(num_id) + ". operador_multiplicacao", children = [Node(str(num_id) + ". " +  str(p[1]))])
 
     num_id += 1
 
@@ -445,9 +481,11 @@ def p_fator(p):
     global num_id
 
     if(len(p) == 4):
-        p[0] = Node(str(num_id) + ". Fator", children = [p[2]])
+        p[0] = Node(str(num_id) + ". fator", children = [
+            Node(str(num_id) + ". " +  str(p[1])), p[2], Node(str(num_id) + ". " +  str(p[3]))
+        ])
     else:
-        p[0] = Node(str(num_id) + ". Fator", children = [p[1]])
+        p[0] = Node(str(num_id) + ". fator", children = [p[1]])
 
     num_id += 1
     
@@ -460,7 +498,9 @@ def p_numero(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". " + str(p[1]))
+    p[0] = Node(str(num_id) + ". numero", children = [
+        Node(str(num_id) + ". " +  str(p[1]))
+    ])
 
     num_id += 1
 
@@ -471,7 +511,9 @@ def p_chamada_funcao(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Chamada Função", children = [p[3]])
+    p[0] = Node(str(num_id) + ". chamada_funcao", children = [
+        Node(str(num_id) + ". " +  str(p[1])), Node(str(num_id) + ". " +  str(p[2])), p[3], Node(str(num_id) + ". " +  str(p[4]))
+    ])
 
     num_id += 1
 
@@ -485,9 +527,11 @@ def p_lista_argumentos(p):
     global num_id
 
     if(len(p) == 4):
-        p[0] = Node(str(num_id) + ". Lista Argumentos", children = [p[1], p[3]])
+        p[0] = Node(str(num_id) + ". lista_argumentos", children = [
+            p[1], Node(str(num_id) + ". " +  str(p[2])), p[3]
+        ])
     else:
-        p[0] = Node(str(num_id) + ". Lista Argumentos", children = [p[1]])
+        p[0] = Node(str(num_id) + ". lista_argumentos", children = [p[1]])
 
     num_id += 1
 
@@ -498,13 +542,14 @@ def p_vazio(p):
 
     global num_id
 
-    p[0] = Node(str(num_id) + ". Vazio")
+    p[0] = Node(str(num_id) + ". vazio")
 
     num_id += 1
 
 def p_error(p):
     global success
     success = False
+    print('99999', p)
 
     if p:
         print('Invalid syntax at token \'' + str(p.value) + '\' at ' + str(int((p.lineno - 1)/2)) + ':' + str(lex.f_column(p)))
