@@ -166,7 +166,7 @@ def t_ANY_error(t):
 	global success
 	success = False
 
-	print('Invalid Caracter \'' + t.value[0] + '\' at ' + str(t.lineno) + ':' + str(f_column(t)))
+	print('Caracter Inválido \'' + t.value[0] + '\' em ' + str(t.lineno) + ':' + str(f_column(t)))
 	t.lexer.skip(1)
 
 def f_column(token):
