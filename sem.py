@@ -286,7 +286,7 @@ class Analyzer():
     if(node.value == 'expressao'):
       return self.verify_expression(node.children[0])
 
-    if(node.value == 'expressao_unitaria'):
+    if(node.value == 'expressao_unaria'):
       children = node.children
       if(len(children) == 1):
         expression_type = children[0].children[0]

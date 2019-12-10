@@ -8,6 +8,7 @@ import lex
 import syn
 import pruning_tree
 import sem
+import code_generator
 
 def print_tokens(tokens):
   for token in tokens:
@@ -56,5 +57,9 @@ def main():
 
   if(not semantic_success):
     return
+
+  print('\n\n§§§§§§§§§§§ Gerando Código §§§§§§§§§§§\n\n')
+
+  code_generator.main(tree, filename)
 
 main()

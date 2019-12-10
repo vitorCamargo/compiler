@@ -366,16 +366,22 @@ def p_expressao_unaria(p):
   '''
     expressao_unaria : fator
                       | operador_soma fator
-                      | operador_negacao fator
+                      | DIFERENTE fator
   '''
 
   if(len(p) == 3):
-    p[0] = Node('expressao_unaria', value = 'expressao_unitaria', children = [
-      p[1],
-      p[2]
-    ])
+    if(p[1] == '!'):
+      p[0] = Node('expressao_unaria', value = 'expressao_unaria', children = [
+        Node(str(p[1]), value = str(p[1]), line = (p.lineno(1) - (total_lines - 1)), column = f_column(p, 1)),
+        p[2]
+      ])
+    else:
+      p[0] = Node('expressao_unaria', value = 'expressao_unaria', children = [
+        p[1],
+        p[2]
+      ])
   else:
-    p[0] = Node('expressao_unaria', value = 'expressao_unitaria', children = [p[1]])
+    p[0] = Node('expressao_unaria', value = 'expressao_unaria', children = [p[1]])
 
 def p_operador_relacional(p):
   '''

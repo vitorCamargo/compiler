@@ -47,12 +47,12 @@ class SymbolTable():
     for inner in contex.children:
       response_return = inner.hasReturn
 
-      if not inner.hasReturn:
+      if(not inner.hasReturn):
         response_return = self.searchReturn(inner)
 
-      if inner.contex == 'se':
+      if(inner.scope == 'se'):
         flag_return = response_return
-      elif(flag_return and inner.contex == 'senão' and response_return):
+      elif(flag_return and inner.scope == 'senão' and response_return):
         has_return = True
     return has_return
 
